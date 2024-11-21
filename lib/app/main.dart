@@ -14,7 +14,7 @@ class CryptoApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: const CryptoListScreen(),
+      home: CryptoListScreen(),
     );
   }
 }

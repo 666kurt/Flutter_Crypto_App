@@ -3,7 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
-  const CustomSliverAppBar({super.key});
+  const CustomSliverAppBar({
+    super.key,
+    required this.searchText,
+  });
+
+  final TextEditingController searchText;
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +33,14 @@ class CustomSliverAppBar extends StatelessWidget {
             ),
           ),
           padding: const EdgeInsets.all(16),
-          child: const CustomSearchBar(),
+          child: _buildSearchBar(searchText),
         ),
       ),
     );
   }
-}
 
-class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+  // CustomSearchBar
+  Widget _buildSearchBar(TextEditingController searchText) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.appBarColor,
@@ -51,19 +52,22 @@ class CustomSearchBar extends StatelessWidget {
           // Icon
           Icon(
             CupertinoIcons.search,
-            color: AppColors.accentColor,
+            color: searchText.text.isEmpty
+                ? AppColors.accentColor
+                : AppColors.primaryColor,
           ),
           const SizedBox(width: 16),
           // Divider
           Container(
             color: AppColors.accentColor,
-            width: 1,
+            width: 0.5,
             height: 16,
           ),
           const SizedBox(width: 16),
           // TextField
           Expanded(
             child: CupertinoTextField(
+              controller: searchText,
               padding: const EdgeInsets.all(0),
               decoration: const BoxDecoration(
                 color: Colors.transparent,

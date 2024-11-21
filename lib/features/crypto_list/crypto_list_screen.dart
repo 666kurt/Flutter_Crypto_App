@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'widgets/widgets.dart';
 
 class CryptoListScreen extends StatelessWidget {
-  const CryptoListScreen({super.key});
+  CryptoListScreen({super.key});
+
+  // Widgets properties
+  final TextEditingController searchText = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: CustomScrollView(
         slivers: [
           // AppBar
-          CustomSliverAppBar(),
+          CustomSliverAppBar(searchText: searchText),
           // ListView
+          SliverList.builder(
+            itemCount: 20,
+            itemBuilder: (context, index) {
+              return Container();
+            },
+          )
         ],
       ),
     );
