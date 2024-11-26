@@ -1,5 +1,9 @@
+import 'package:crypto_app/features/crypto_list/bloc/crypto_list_bloc.dart';
+import 'package:crypto_app/features/crypto_list/bloc/crypto_list_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../features/features.dart';
+import '../services/network_service.dart';
 import '../theme/app_theme.dart';
 
 void main() {
@@ -9,15 +13,16 @@ void main() {
 class CryptoApp extends StatelessWidget {
   const CryptoApp({super.key});
 
-  final url =
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false&price_change_percentage=24h&locale=en";
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: CryptoListScreen(),
+      home: BlocProvider(
+        create: (context) =>
+            CoinsBloc(NetworkService())..add(FetchCoinsEvent()),
+        child: CryptoListScreen(),
+      ),
     );
   }
 }

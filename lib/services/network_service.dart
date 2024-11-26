@@ -20,7 +20,7 @@ class NetworkService {
     required int page,
     required bool sparkline,
     required String priceChangePercentage,
-    required Stream locale,
+    required String locale,
   }) async {
     try {
       final responce = await _dio.get('/coins/markets', queryParameters: {
