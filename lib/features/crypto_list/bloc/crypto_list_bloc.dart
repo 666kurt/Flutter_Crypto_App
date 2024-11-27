@@ -29,6 +29,25 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
       }
     });
 
+    // Обработчик события для обновления данных
+    on<RefreshCoinsEvent>((event, emit) async {
+      try {
+        final coins = await networkService.fetchCoins(
+          vsCurrency: event.vsCurrency,
+          order: "market_cup_desc",
+          perPage: 50,
+          page: 1,
+          sparkline: false,
+          priceChangePercentage: "24h",
+          locale: "en",
+        );
+        _allCoins = coins;
+        emit(CoinsSuccessState(coins: _allCoins));
+      } catch (error) {
+        emit(CoinsErrorState(errorMessage: error.toString()));
+      }
+    });
+
     // Обработчик события для поиска монет
     on<SearchCoinsEvent>((event, emit) {
       final value = event.value.toLowerCase();
