@@ -21,7 +21,7 @@ class CryptoApp extends StatelessWidget {
       home: BlocProvider(
         create: (context) =>
             CoinsBloc(NetworkService())..add(FetchCoinsEvent()),
-        child: CryptoListScreen(),
+        child: const CryptoListScreen(),
       ),
     );
   }

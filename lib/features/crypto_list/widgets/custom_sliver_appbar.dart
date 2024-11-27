@@ -1,14 +1,12 @@
+import 'package:crypto_app/features/crypto_list/bloc/crypto_list_bloc.dart';
+import 'package:crypto_app/features/crypto_list/bloc/crypto_list_event.dart';
 import 'package:crypto_app/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
-  const CustomSliverAppBar({
-    super.key,
-    required this.searchText,
-  });
-
-  final TextEditingController searchText;
+  const CustomSliverAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +31,16 @@ class CustomSliverAppBar extends StatelessWidget {
             ),
           ),
           padding: const EdgeInsets.all(16),
-          child: _buildSearchBar(searchText),
+          child: _buildSearchBar(context),
         ),
       ),
     );
   }
 
   // CustomSearchBar
-  Widget _buildSearchBar(TextEditingController searchText) {
+  Widget _buildSearchBar(BuildContext context) {
+    // Widgets properties
+    final TextEditingController searchText = TextEditingController();
     return Container(
       decoration: BoxDecoration(
         color: AppColors.appBarColor,
@@ -67,7 +67,11 @@ class CustomSliverAppBar extends StatelessWidget {
           // TextField
           Expanded(
             child: CupertinoTextField(
+              autocorrect: false,
               controller: searchText,
+              onChanged: (value) {
+                context.read<CoinsBloc>().add(SearchCoinsEvent(value: value));
+              },
               padding: const EdgeInsets.all(0),
               decoration: const BoxDecoration(
                 color: Colors.transparent,

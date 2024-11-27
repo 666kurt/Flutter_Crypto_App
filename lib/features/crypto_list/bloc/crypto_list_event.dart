@@ -11,3 +11,10 @@ class RefreshCoinsEvent extends CoinsEvent {
 
   const RefreshCoinsEvent({required this.vsCurrency});
 }
+
+// Событие поиска монет
+class SearchCoinsEvent extends CoinsEvent {
+  final String value;
+
+  const SearchCoinsEvent({required this.value});
+}

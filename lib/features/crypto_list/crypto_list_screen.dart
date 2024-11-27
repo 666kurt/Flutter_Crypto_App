@@ -5,10 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/widgets.dart';
 
 class CryptoListScreen extends StatelessWidget {
-  CryptoListScreen({super.key});
-
-  // Widgets properties
-  final TextEditingController searchText = TextEditingController();
+  const CryptoListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +21,7 @@ class CryptoListScreen extends StatelessWidget {
             return CustomScrollView(
               slivers: [
                 // AppBar
-                CustomSliverAppBar(searchText: searchText),
+                const CustomSliverAppBar(),
                 // ListView
                 SliverList.builder(
                   itemCount: coins.length,
