@@ -1,6 +1,8 @@
+import 'package:crypto_app/features/crypto_details/crypto_details_screen.dart';
 import 'package:crypto_app/features/crypto_list/bloc/crypto_list_bloc.dart';
 import 'package:crypto_app/features/crypto_list/bloc/crypto_list_event.dart';
 import 'package:crypto_app/features/crypto_list/bloc/crypto_list_state.dart';
+import 'package:crypto_app/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +17,9 @@ class CryptoListScreen extends StatelessWidget {
       body: BlocBuilder<CoinsBloc, CoinsState>(
         builder: (context, state) {
           if (state is CoinsLoadingState) {
-            return const Center(child: CupertinoActivityIndicator());
+            return Center(
+              child: CupertinoActivityIndicator(color: AppColors.primaryColor),
+            );
           } else if (state is CoinsErrorState) {
             return Center(child: Text(state.errorMessage));
           } else if (state is CoinsSuccessState) {
@@ -50,44 +54,25 @@ class CryptoListScreen extends StatelessWidget {
                 ),
 
                 // ListView
-                SliverList.builder(
+                SliverList.separated(
                   itemCount: coins.length,
+                  separatorBuilder: ((context, index) => Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Divider(color: AppColors.appBarColor),
+                      )),
                   itemBuilder: (context, index) {
                     final coin = coins[index];
-                    return Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: const BoxDecoration(),
-                      child: Row(
-                        children: [
-                          // Coin image
-                          Container(
-                            width: 32,
-                            height: 32,
-                            child: Image.network(coin.image),
+                    // Cell of list
+                    return GestureDetector(
+                      child: CryptoListCell(coin: coin),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: (context) =>
+                                CryptoDetailsScreen(coin: coin),
                           ),
-                          const SizedBox(width: 8),
-                          // Column with title
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                coin.symbol.toUpperCase(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              Text(
-                                coin.name,
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.6),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
+                        );
+                      },
                     );
                   },
                 )
