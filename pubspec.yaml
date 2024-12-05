@@ -38,6 +38,7 @@ dependencies:
   dio: ^5.7.0
   flutter_bloc: ^8.1.6
   auto_route: ^9.2.2
+  fl_chart: ^0.69.2
 
 dev_dependencies:
   auto_route_generator: ^9.0.0

@@ -16,6 +16,7 @@ class Coin {
   double marketCapChangePercentage24H;
   DateTime lastUpdated;
   double priceChangePercentage24HInCurrency;
+  SparklineIn7D sparklineIn7D;
 
   Coin({
     required this.id,
@@ -35,6 +36,7 @@ class Coin {
     required this.marketCapChangePercentage24H,
     required this.lastUpdated,
     required this.priceChangePercentage24HInCurrency,
+    required this.sparklineIn7D,
   });
 
   factory Coin.fromJson(Map<String, dynamic> json) => Coin(
@@ -58,5 +60,18 @@ class Coin {
         lastUpdated: DateTime.parse(json["last_updated"]),
         priceChangePercentage24HInCurrency:
             json["price_change_percentage_24h_in_currency"]?.toDouble(),
+        sparklineIn7D: SparklineIn7D.fromJson(json["sparkline_in_7d"]),
+      );
+}
+
+class SparklineIn7D {
+  List<double> price;
+
+  SparklineIn7D({
+    required this.price,
+  });
+
+  factory SparklineIn7D.fromJson(Map<String, dynamic> json) => SparklineIn7D(
+        price: List<double>.from(json["price"].map((x) => x?.toDouble())),
       );
 }

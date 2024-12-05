@@ -18,7 +18,7 @@ class CoinsBloc extends Bloc<CoinsEvent, CoinsState> {
           order: "market_cup_desc",
           perPage: 50,
           page: 1,
-          sparkline: false,
+          sparkline: true,
           priceChangePercentage: "24h",
           locale: "en",
         );
